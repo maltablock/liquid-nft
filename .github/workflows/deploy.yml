@@ -1,0 +1,57 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Set up node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: npm install, build
+        run: |
+          cd frontend
+          npm i
+          npm run build
+        env:
+          CI: false
+
+      - name: Upload to GCP bucket
+        uses: actions-hub/gcloud@281.0.0
+        env:
+          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          CLI: gsutil
+        with:
+          args: -m rsync -d -r ./build gs://${{ secrets.BUCKET_URI }}/
+
+      - name: Make files publicly accessible
+        uses: actions-hub/gcloud@281.0.0
+        env:
+          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          CLI: gsutil
+        with:
+          args: -m acl ch -r -u AllUsers:R gs://${{ secrets.BUCKET_URI }}/*
+
+
+      - name: Edit the bucket configuration 
+        uses: actions-hub/gcloud@281.0.0
+        env:
+          PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          CLI: gsutil
+        with:
+          args: web set -m index.html -e index.html gs://${{ secrets.BUCKET_URI }}
+
