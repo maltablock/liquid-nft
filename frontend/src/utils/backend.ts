@@ -43,7 +43,7 @@ export const sendBackendUploadRequest = async (
   let content;
   try {
     rawResponse = await axios.post(endpoint, formData, {
-      responseType: `json`,
+      responseType: `text`, // need this instead of json to get errors in response.data
     });
     content = rawResponse.data;
   } catch (error) {

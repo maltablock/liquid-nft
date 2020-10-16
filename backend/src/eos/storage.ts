@@ -1,8 +1,13 @@
 import { createClient } from "@liquidapps/dapp-client";
 import { RpcError } from "eosjs";
+import { getEnvConfig } from "../dotenv";
+import { logger } from "../logger";
 import { extractRpcError } from "../utils";
 import { getNetwork, getNetworkName, getContractsForNetwork } from "./networks";
+import fetch from "node-fetch";
 
+// for dfuse in createClient
+global.fetch = fetch;
 const textDecoder = new TextDecoder();
 
 export const getDappClient = async () => {
@@ -11,21 +16,21 @@ export const getDappClient = async () => {
   return await createClient({
     network: networkName,
     httpEndpoint: network.nodeEndpoint,
-    fetch: window.fetch.bind(window),
+    fetch: fetch,
   });
 };
 
 export const resolveIpfsUrl = (src: string) => {
-  if (src.startsWith(`ipfs://`))
-    return getStorageClient().resolveIpfsUri(src);
+  if (src.startsWith(`ipfs://`)) return getStorageClient().resolveIpfsUri(src);
   return src;
 };
 
-const UPLOAD_KEY = `privateKeyWif`
-
 class StorageClient {
   private dappStorageClient;
-  private ipfsGatewayEndpoint = getNetworkName() === `wax` ? `https://ipfs.maltablock.org/ipfs/` : `https://ipfs.liquidapps.io/ipfs/`;
+  private ipfsGatewayEndpoint =
+    getNetworkName() === `wax`
+      ? `https://ipfs.maltablock.org/ipfs/`
+      : `https://ipfs.liquidapps.io/ipfs/`;
 
   constructor() {}
 
@@ -33,22 +38,27 @@ class StorageClient {
     const dappClient = await getDappClient();
     const storageClient = await dappClient.service(
       "storage",
-      getContractsForNetwork().hoster,
+      getContractsForNetwork().hoster
     );
 
     this.dappStorageClient = storageClient;
     // fix a bug with current @liquid-apps/client
-    const innerAuthClient = this.dappStorageClient.auth;
-    innerAuthClient.authContract = `authentikeos`;
+    // const innerAuthClient = this.dappStorageClient.auth;
+    // innerAuthClient.authContract = `authentikeos`;
   }
 
   upload = async (data: Buffer) => {
     try {
-      // https://github.com/liquidapps-io/zeus-sdk/blob/master/boxes/groups/services/storage-dapp-service/test/storage.spec.js#L56
+      // https://github.com/liquidapps-io/zeus-sdk/blob/master/boxes/groups/services/storage-dapp-service/test/storage.spec.js#L115
+      const options = {
+        rawLeaves: true
+      };
       const result = await this.dappStorageClient.upload_public_file(
         data,
-        UPLOAD_KEY,
-        `uploader`
+        getEnvConfig()[getNetworkName()].key,
+        getEnvConfig()[getNetworkName()].permission,
+        null,
+        options,
       );
 
       const ipfsUri = result.uri;

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { pickPublicFields } from "../utils/format";
 import UserData, { IUserData } from "../models/UserData";
 import { logger } from "../logger";
+import { getStorageClient } from "../eos/storage";
 
 export default class UserController {
   async login(request: Request, response: Response, next: NextFunction) {
@@ -30,17 +31,20 @@ export default class UserController {
       throw new Error("file is not found");
     }
     // accessing the file
-    const myFile = request.files.file;
-    logger.info(`Uploaded file`, myFile);
+    const myFile = request.files.file as { data: Buffer, name: string, size: number };
+    logger.info(`Uploaded file`, myFile.name, myFile.size, myFile);
+
+      const client = await getStorageClient();
+      const ipfsUri = await client.upload(myFile.data);
 
     //  mv() method places the file inside public directory
-    myFile.mv(`uploads/${myFile.name}`, function (err) {
-      if (err) {
-        console.log(err);
-        throw new Error("Error occured");
-      }
-      // returing the response with file path and name
-    });
-    return { name: myFile.name, path: `/${myFile.name}` };
+    // myFile.mv(`uploads/${myFile.name}`, function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //     throw new Error("Error occured");
+    //   }
+    //   // returing the response with file path and name
+    // });
+    return { name: myFile.name, ipfsHash: ipfsUri };
   }
 }

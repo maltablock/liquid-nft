@@ -32,6 +32,7 @@ export default class UserStore {
       this.rootStore.modalStore.toasts.danger({
         title: "Error",
         message: `Could not load user: ${error.message}`,
+        timeout: 0,
       });
     }
   }
@@ -49,6 +50,7 @@ export default class UserStore {
       this.rootStore.modalStore.toasts.danger({
         title: "Upload failure",
         message: `Could not upload files: ${error.message}`,
+        timeout: 0,
       });
     } finally {
       this.pendingUploads = [];

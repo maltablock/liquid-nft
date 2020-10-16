@@ -9,6 +9,7 @@ import { logger } from "./logger";
 import connect from "./connect";
 import { logRequest } from "./middlewares/log-request";
 import { checkAuth } from "./middlewares/eosio-auth";
+import { getStorageClient } from "./eos/storage";
 
 async function start() {
   const db = process.env.MONGO_URL || "mongodb://localhost:27017/hoster";
@@ -27,7 +28,7 @@ async function start() {
       // parts: 51,
     }
   }));
-  // app.use(logRequest);
+  app.use(logRequest);
 
   // register express routes from defined application routes
   Routes.forEach((route) => {
@@ -56,6 +57,8 @@ async function start() {
     res.send(err.message);
   });
 
+  await getStorageClient().init()
+
   // start express server
   const PORT = process.env.PORT || 3003;
   const VERSION = process.env.npm_package_version;
@@ -70,7 +73,7 @@ async function start() {
   );
 }
 
-start().catch((error) => logger.error(error.message || error));
+start().catch((error) => logger.error(`main error:`, error.message || error));
 
 process.on("unhandledRejection", function (reason: any, p) {
   let message = reason ? (reason as any).stack : reason;
