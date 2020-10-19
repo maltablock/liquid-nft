@@ -29,11 +29,11 @@ type VRAMFetchOptions = {
 export async function fetchVRAMRow<T>(
   _options: Partial<VRAMFetchOptions>
 ): Promise<T> {
-  const client = await (await getClient()).service('ipfs', getContractsForNetwork().hoster);
+  const client = await (await getClient()).service('ipfs', getContractsForNetwork(`wax`).hoster);
 
   const options: VRAMFetchOptions = defaults(_options, {
-    scope: getContractsForNetwork().hoster,
-    contract: getContractsForNetwork().hoster,
+    scope: getContractsForNetwork(`wax`).hoster,
+    contract: getContractsForNetwork(`wax`).hoster,
     table: ``,
     key: 0
   });

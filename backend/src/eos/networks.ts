@@ -3,9 +3,8 @@ import fetch from "node-fetch";
 import { NetworkName } from "../types";
 import { isProduction } from "../utils";
 
-export const getContractsForNetwork = () => {
-  const network = getNetworkName()
-  switch (network) {
+export const getContractsForNetwork = (networkName) => {
+  switch (networkName) {
     case `kylin`:
       return {
         hoster: `maltablock12`,
@@ -14,9 +13,13 @@ export const getContractsForNetwork = () => {
       return {
         hoster: `maltareports`,
       };
+    case `eos`:
+      return {
+        hoster: `maltablock.e`,
+      };
     default:
       throw new Error(
-        `No contract accounts for "${network}" network defined yet`
+        `No contract accounts for "${networkName}" network defined yet`
       );
   }
 };
@@ -55,7 +58,7 @@ const WaxTestNetwork = createNetwork(
   `f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12`
 );
 const MainNetwork = createNetwork(
-  process.env.EOS_ENDPOINT || `https://eos.greymass.com`,
+  process.env.EOS_ENDPOINT || `https://dsp.airdropsdac.com:443`,
   `aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906`
 );
 const WaxNetwork = createNetwork(
@@ -83,8 +86,7 @@ export function getNetwork(networkName: string) {
   }
 }
 
-export const getRpc = (): JsonRpc => {
-  const networkName = getNetworkName();
+export const getRpc = (networkName: string): JsonRpc => {
   const rpcs = {};
   if (!rpcs[networkName]) {
     rpcs[networkName] = new JsonRpc(getNetwork(networkName).nodeEndpoint, {

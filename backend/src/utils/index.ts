@@ -28,7 +28,7 @@ export const extractRpcError = (err: Error | RpcError | any) => {
     } catch {}
   } else if (err.json) {
     // might only be LiquidAPps client lib
-    if (err.json.error)
+    if (err.json.error && Array.isArray(err.json.error.details))
       return err.json.error.details
         .map((detail) => {
           return detail.message;

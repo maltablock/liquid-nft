@@ -4,9 +4,8 @@ import { TextDecoder, TextEncoder } from "util";
 import { getEnvConfig } from "../dotenv";
 import { getNetworkName, getRpc } from "./networks";
 
-export const getApi = (): Api => {
+export const getApi = (networkName: string): Api => {
   const apis = {};
-  const networkName = getNetworkName();
   if (!apis[networkName]) {
     const envConfig = getEnvConfig();
     if (!envConfig[networkName])
@@ -18,7 +17,7 @@ export const getApi = (): Api => {
       )
     );
     apis[networkName] = new Api({
-      rpc: getRpc(),
+      rpc: getRpc(networkName),
       signatureProvider,
       textDecoder: new TextDecoder(),
       textEncoder: new TextEncoder() as any,

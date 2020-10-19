@@ -17,7 +17,7 @@ export const getEnvConfig = () => {
     };
   };
 
-  return ([`wax`] as NetworkName[]).reduce(
+  return ([`wax`, `eos`] as NetworkName[]).reduce(
     (acc, network) => ({
       ...acc,
       [network]: parse(network),

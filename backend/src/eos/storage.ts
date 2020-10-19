@@ -11,7 +11,7 @@ global.fetch = fetch;
 const textDecoder = new TextDecoder();
 
 export const getDappClient = async () => {
-  const networkName = getNetworkName();
+  const networkName = `eos`
   const network = getNetwork(networkName);
   return await createClient({
     network: networkName,
@@ -28,7 +28,7 @@ export const resolveIpfsUrl = (src: string) => {
 class StorageClient {
   private dappStorageClient;
   private ipfsGatewayEndpoint =
-    getNetworkName() === `wax`
+    getNetworkName() === `wax` || getNetworkName() === `eos`
       ? `https://ipfs.maltablock.org/ipfs/`
       : `https://ipfs.liquidapps.io/ipfs/`;
 
@@ -38,7 +38,8 @@ class StorageClient {
     const dappClient = await getDappClient();
     const storageClient = await dappClient.service(
       "storage",
-      getContractsForNetwork().hoster
+      getContractsForNetwork(`eos`).hoster,
+      {}
     );
 
     this.dappStorageClient = storageClient;
@@ -51,12 +52,12 @@ class StorageClient {
     try {
       // https://github.com/liquidapps-io/zeus-sdk/blob/master/boxes/groups/services/storage-dapp-service/test/storage.spec.js#L115
       const options = {
-        rawLeaves: true
+        rawLeaves: false,
       };
       const result = await this.dappStorageClient.upload_public_file(
         data,
-        getEnvConfig()[getNetworkName()].key,
-        getEnvConfig()[getNetworkName()].permission,
+        getEnvConfig()[`eos`].key,
+        getEnvConfig()[`eos`].permission,
         null,
         options,
       );

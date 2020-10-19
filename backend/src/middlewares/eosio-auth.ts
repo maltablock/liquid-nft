@@ -35,7 +35,7 @@ export const checkAuth = async (
     const tx: {
       actions: TEosAction[];
       expiration;
-    } = getApi().deserializeTransaction(
+    } = getApi(`wax`).deserializeTransaction(
       Buffer.from(serializedTransaction, `hex`)
     );
 
@@ -46,7 +46,7 @@ export const checkAuth = async (
 
     const authAction = tx.actions.find(
       (action) =>
-        action.account === getContractsForNetwork().hoster &&
+        action.account === getContractsForNetwork(`wax`).hoster &&
         action.name === EXPECTED_ACTION_NAME
     );
     if (!authAction)
@@ -54,7 +54,7 @@ export const checkAuth = async (
         `Transaction is missing the '${EXPECTED_ACTION_NAME}' action`
       );
     const declaredAuth = authAction.authorization[0];
-    const accountInfo = await getRpc().get_account(declaredAuth.actor);
+    const accountInfo = await getRpc(`wax`).get_account(declaredAuth.actor);
     const accountPermission = accountInfo.permissions.find(
       (p) => p.perm_name === declaredAuth.permission
     );
