@@ -36,7 +36,7 @@ jobs:
           APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
           CLI: gsutil
         with:
-          args: -m rsync -d -r ./build gs://${{ secrets.BUCKET_URI }}/
+          args: -m rsync -d -r ./frontend/build gs://${{ secrets.BUCKET_URI }}/
 
       - name: Make files publicly accessible
         uses: actions-hub/gcloud@281.0.0
