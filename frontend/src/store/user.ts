@@ -5,6 +5,13 @@ import { TUploadArg } from "../components/User/FileUpload";
 
 type TUserData = {
   account: string;
+  bytesPinned: number;
+  files: {
+    ipfsHash: string;
+    name: string;
+    size: number;
+    uploadedAt: string; // ISO Date string
+  }[];
 };
 
 export default class UserStore {
@@ -44,13 +51,22 @@ export default class UserStore {
       files.forEach(file => {
         formData.append("file", file.fileBlob);
       });
-      await sendBackendUploadRequest(this.rootStore.walletStore.axios, formData);
+      const { user } = await sendBackendUploadRequest<{ user: TUserData }>(
+        this.rootStore.walletStore.axios,
+        formData,
+      );
+      this.userData = user;
+
+      this.rootStore.modalStore.toasts.success({
+        title: "Success",
+        message: `File uploaded to IPFS`,
+      });
     } catch (error) {
       console.error(error.message);
       this.rootStore.modalStore.toasts.danger({
         title: "Upload failure",
         message: `Could not upload files: ${error.message}`,
-        timeout: 0,
+        timeout: 10000,
       });
     } finally {
       this.pendingUploads = [];

@@ -33,10 +33,10 @@ export const sendBackendRequest = async <T = any, U = any>(
   return content;
 };
 
-export const sendBackendUploadRequest = async (
+export const sendBackendUploadRequest = async <T = any> (
   axios: AxiosInstance,
   formData: FormData,
-): Promise<void> => {
+): Promise<T> => {
   const endpoint = `${BACKEND_BASE_URL}/upload`;
 
   let rawResponse;
