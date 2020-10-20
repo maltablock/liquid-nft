@@ -31,6 +31,7 @@ jobs:
 
       - name: Upload to GCP bucket
         uses: actions-hub/gcloud@281.0.0
+        # docker script is using --work-dir flag, so we need to take that into account
         env:
           PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
           APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
