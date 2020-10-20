@@ -9,6 +9,9 @@ jobs:
   deploy:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend # set working dir to frontend for entire job
 
     steps:
       - name: Checkout repository
@@ -21,7 +24,6 @@ jobs:
 
       - name: npm install, build
         run: |
-          cd frontend
           npm i
           npm run build
         env:

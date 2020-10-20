@@ -4,7 +4,7 @@ import trim from "lodash/trim";
 export const BACKEND_BASE_URL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:3003`
-    : `https://liquidnft.com`;
+    : `https://liquidnft.org`;
 
 export const sendBackendRequest = async <T = any, U = any>(
   axios: AxiosInstance,
