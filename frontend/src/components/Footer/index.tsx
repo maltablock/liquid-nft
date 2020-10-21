@@ -5,8 +5,9 @@ import SocialMediaSprites from "./social-media-sprites";
 
 const Footer: React.FC = () => {
   const copyRighttNotice = `© ${new Date().getFullYear()} Malta Block. All rights reserved.`;
+
   return (
-    <Flex flexDirection="column" alignItems="center" margin="auto">
+    <Flex flexDirection="column" alignItems="center" marginTop="auto" marginX="auto" marginBottom="major-4">
       <Image
         src={maltablockLogo}
         alt="logo"
@@ -15,15 +16,16 @@ const Footer: React.FC = () => {
       />
       <Box fontSize="20px" fontWeight="700" marginBottom="40px">
         <Link
-          color="black"
+          color="white"
           textDecoration="none"
           href="https://maltablock.org/"
+          fontFamily="Montserrat"
         >
           MaltaBlock.org
         </Link>
       </Box>
       <SocialMediaSprites />
-      <Flex fontSize="150" justifyContent="center" margin="0 0 8px 0">
+      <Flex fontSize="100" fontWeight="700" justifyContent="center" margin="0 0 8px 0">
         {[
           {
             link: `https://maltablock.org/files/terms.pdf`,
@@ -46,7 +48,7 @@ const Footer: React.FC = () => {
           </Link>
         ))}
       </Flex>
-      <Box use="p" fontSize="150" color="gray500">
+      <Box use="p" fontSize="100" color="gray500">
         {" "}
         {copyRighttNotice}
       </Box>

@@ -1,4 +1,4 @@
-import { Box, Container, Heading, ToastManager } from "bumbag";
+import { Box, Container, Heading, ToastManager, useColorMode } from "bumbag";
 import { observer } from "mobx-react";
 import React, { useEffect } from "react";
 import Helmet from "react-helmet";
@@ -10,9 +10,10 @@ import { useStore } from "./store/hook";
 
 const App: React.FC<{}> = props => {
   const [rootStore] = useStore(store => [store]);
-
+  const { setColorMode } = useColorMode();
   useEffect(() => {
     rootStore.init();
+    setColorMode(`dark`); // just to bust the localstorage of previous visitors
   }, []);
 
   return (
@@ -24,6 +25,7 @@ const App: React.FC<{}> = props => {
       backgroundSize="cover"
       backgroundPosition="center center"
       backgroundAttachment="fixed"
+      justifyContent="space-between"
     >
       <Helmet>
         <title>Liquid NFT</title>
@@ -41,9 +43,9 @@ const App: React.FC<{}> = props => {
         use="main"
         breakpoint="desktop"
         alignX="center"
+        marginTop="major-12"
         marginBottom="major-4"
       >
-        <Heading marginBottom="major-12" color="primary">Liquid NFT</Heading>
         <UserOverview />
       </Container>
       <Footer />

@@ -4,6 +4,7 @@ import {
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import bgSrc from "../assets/bg.jpg";
 
 const theme = {
   global: {
@@ -16,9 +17,11 @@ const theme = {
           margin: 0;
           font-size: 16px;
           font-weight: 500;
-          color: black;
           background-repeat: no-repeat;
-          background-color: #ffffff;
+          background-color: #000000;
+
+          background: url(${bgSrc}) no-repeat center center fixed; 
+          background-size: cover;
 
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
@@ -47,7 +50,7 @@ const theme = {
 
         body,
         * {
-          font-family: "Montserrat", sans-serif;
+          font-family: "Roboto", sans-serif;
           box-sizing: border-box;
         }
       `,
@@ -55,14 +58,19 @@ const theme = {
   },
   fonts: {
     importUrls: [
+      `https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700&display=swap`,
       `https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap`,
     ],
-    default: "Montserrat",
+    default: "Roboto",
     heading: "Montserrat",
   },
   palette: {
-    primary: "#404dff",
+    primary: "#ff4f3e",
+    secondary: "#01ef7a",
+    tertiary: "#a4ff00",
     transparent: "#00000000",
+    background: "#003547",
+    gray500: `#A1A8B3`,
   },
   Icon: {
     iconSets: [
@@ -90,6 +98,23 @@ const theme = {
       },
     },
   },
+  Button: {
+    variants: {
+      'primary': {
+        styles: {
+          base: {
+            color: `white`,
+            backgroundColor: `primary`,
+            borderRadius: `20px`,
+            padding: `10px 40px`,
+            fontSize: `200`,
+            lineHeight: `20px`,
+            minHeight: `unset`,
+          }
+        }
+      }
+    },
+  }
 };
 
 export default theme;

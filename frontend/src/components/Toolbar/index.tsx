@@ -1,11 +1,12 @@
-import { Button, Flex } from "bumbag";
+import { Button, Flex, Image } from "bumbag";
 import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
 import { UALProps, withUAL } from "ual-reactjs-renderer";
 import { useStore } from "../../store/hook";
+import logoSrc from "../../assets/logo-liquid-nft.svg";
 
-const Toolbar: React.FC<UALProps> = (props) => {
-  const [walletStore] = useStore((store) => [store.walletStore]);
+const Toolbar: React.FC<UALProps> = props => {
+  const [walletStore] = useStore(store => [store.walletStore]);
 
   useEffect(() => {
     walletStore.onUALChange(props.ual);
@@ -21,14 +22,19 @@ const Toolbar: React.FC<UALProps> = (props) => {
   };
 
   return (
-    <Flex justifyContent="flex-end" margin="minor-1">
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      marginTop="major-7"
+      marginX="major-7"
+    >
+      <Image src={logoSrc} height="36px" />
       <Button
-        variant={walletStore.isLoggedIn ? `ghost` : `default`}
-        palette="primary"
+        variant="primary"
         type="button"
         onClick={onClick}
       >
-        {isLoggedIn ? walletStore.accountName : `Login`}
+        {isLoggedIn ? walletStore.accountName : `Sign In`}
       </Button>
     </Flex>
   );

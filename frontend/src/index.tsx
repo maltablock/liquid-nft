@@ -34,7 +34,7 @@ const UALWrapper: React.FC<{}> = observer((props) => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={RootStore}>
-      <BumbagProvider theme={theme as any}>
+      <BumbagProvider theme={theme as any} colorMode="dark">
         <UALWrapper>
           <App />
         </UALWrapper>

@@ -60,10 +60,12 @@ const FileUpload: React.FC<Props> = ({ onUpload, disabled }) => {
         paddingX="major-3"
         paddingY="major-5"
         textAlign="center"
-        palette="primary"
+        palette="secondary"
         whiteSpace="normal"
         wordBreak="break-word"
-        border="2px dashed #fff"
+        borderStyle="dashed"
+        borderColor="background"
+        borderWidth="2px"
         borderRadius="4"
         isLoading={disabled}
       >

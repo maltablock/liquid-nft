@@ -28,7 +28,7 @@ const SocialMediaSprites: React.FC = () => {
     >
       {socialMedia.map(({ link, Sprite }: SocialMedia) => (
         <Box use="li" width="30px" key={link}>
-          <Link href={link} color="primary">
+          <Link href={link} color="secondary">
             <Sprite alt="Social sprite" />
           </Link>
         </Box>
