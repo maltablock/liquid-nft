@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Link } from "bumbag";
 import React from "react";
-import maltablockLogo from "../../assets/footer/maltablock-logo.svg";
+import maltablockLogo from "../../assets/footer/logo-maltablock.svg";
 import SocialMediaSprites from "./social-media-sprites";
 
 const Footer: React.FC = () => {

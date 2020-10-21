@@ -10,8 +10,8 @@ interface SocialMedia {
   Sprite: any;
 }
 const socialMedia: SocialMedia[] = [
-  { link: "https://medium.com/@maltablock", Sprite: Medium },
-  { link: "https://t.me/airdropsdac", Sprite: Telegram },
+  // { link: "https://medium.com/@maltablock", Sprite: Medium },
+  { link: "https://t.me/liquidnft", Sprite: Telegram },
   { link: "https://twitter.com/maltablock", Sprite: Twitter },
   { link: "mailto:michael@maltablock.org", Sprite: Mail },
 ];
