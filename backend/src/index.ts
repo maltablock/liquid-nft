@@ -21,8 +21,10 @@ async function start() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(fileUpload({
-    limits: { 
-      fileSize: 100 * 1024 * 1024,
+    limits: {
+      // doesn't work correctly?
+      // fileSize: 1 * 1024 * 1024, // 1 MB until liquidstorage is fixed
+      // fileSize: 100 * 1024 * 1024,
       // fields: 50,
       // files: 1,
       // parts: 51,

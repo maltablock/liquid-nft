@@ -49,14 +49,27 @@ export default class UserController {
       size: number;
     };
 
+    if (myFile.size > 1024 * 1024) {
+      throw new Error(`File sizes > 1 MB currently not supported`);
+    }
+
     if (user.bytesPinned + myFile.size > MAX_UPLOAD_BYTES_PER_USER) {
       throw new Error(
         `Max upload limit reached. Please upgrade to premium or unpin some files to free space.`
       );
     }
 
+    logger.info(`trying to upload file`, myFile.name, myFile.size);
+
     const client = await getStorageClient();
-    const ipfsHash = await client.upload(myFile.data);
+    let ipfsHash = ``
+    try {
+      ipfsHash = await client.upload(myFile.data);
+    } catch (error) {
+      if (/invalid json response/i.test(error.message)) {
+        throw new Error(`Internal Error`);
+      }
+    }
 
     const fileDoc = user.files.find((f) => f.ipfsHash === ipfsHash);
     if (!fileDoc) {

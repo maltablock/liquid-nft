@@ -1,10 +1,32 @@
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { Button, Box, Heading, List, Text, Table, Link, Alert } from "bumbag";
+import {
+  Button,
+  Box,
+  Heading,
+  List,
+  Text,
+  Table,
+  Link,
+  Alert,
+  applyTheme,
+} from "bumbag";
 import { useCallback } from "react";
 import { observer } from "mobx-react";
 import { useStore } from "../../store/hook";
 import { resolveIpfsUrl } from "../../eos/storage";
+
+export const StyledTable = applyTheme(Table, {
+  styles: {
+    base: (props: any) => ({
+      borderCollapse: `separate`,
+      borderSpacing: `0 2px`,
+    }),
+  },
+  defaultProps: {
+    size: `small`,
+  },
+});
 
 const ExistingUploads: React.FC<{}> = ({}) => {
   const userStore = useStore(store => store.userStore);
@@ -20,18 +42,22 @@ const ExistingUploads: React.FC<{}> = ({}) => {
   const mbUsed = (userStore.userData.bytesPinned / (1024 * 1024)).toFixed(2);
 
   const table = (
-    <Table variant="minimal">
+    <StyledTable
+      variant="minimal"
+    >
       <Table.Head>
         <Table.Row>
-          <Table.HeadCell>Name</Table.HeadCell>
-          <Table.HeadCell>Size</Table.HeadCell>
-          <Table.HeadCell>Date</Table.HeadCell>
-          <Table.HeadCell textAlign="right">Download</Table.HeadCell>
+          <Table.HeadCell color="secondary">Name</Table.HeadCell>
+          <Table.HeadCell color="secondary">Size</Table.HeadCell>
+          <Table.HeadCell color="secondary">Date</Table.HeadCell>
+          <Table.HeadCell color="secondary" textAlign="right">
+            Download
+          </Table.HeadCell>
         </Table.Row>
       </Table.Head>
       <Table.Body>
         {sortedFiles.map((file, index) => (
-          <Table.Row key={index}>
+          <Table.Row backgroundColor="#024258" key={index}>
             <Table.Cell wordBreak="break-all" fontWeight="600">
               {file.name}
             </Table.Cell>
@@ -47,7 +73,7 @@ const ExistingUploads: React.FC<{}> = ({}) => {
           </Table.Row>
         ))}
       </Table.Body>
-    </Table>
+    </StyledTable>
   );
 
   return (
@@ -57,6 +83,7 @@ const ExistingUploads: React.FC<{}> = ({}) => {
         fontSize="300"
         textAlign="center"
         marginBottom="major-2"
+        color="secondary"
       >
         {`Pinned Files (${mbUsed}MB / 1024 MB)`}
       </Heading>

@@ -30,6 +30,7 @@ export const logRequest = (
         responseData: JSON.stringify(body), // THIS IS NOT FILLED WHEN 304 RETURNED / CACHE IS HIT
         statusCode: res.statusCode,
         referer: req.headers.referer || "",
+        account: req.account,
         // ua: req.headers["user-agent"],
       },
     );
