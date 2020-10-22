@@ -14,6 +14,7 @@ import { TokenPocket } from "ual-token-pocket";
 import { api, waxMainnet, CONTRACTS_MAP } from "../eos/networks";
 import RootStore from "./index";
 import { BACKEND_BASE_URL } from "../utils/backend";
+import { delay } from "../utils/promise";
 
 const formatErrorMessage = (ualError: any) => {
   const originalMsg = (ualError?.cause?.json?.error?.details[0] || ualError)
@@ -154,6 +155,7 @@ export default class WalletStore {
       console.log(`logged in as ${this.accountName}@${this.permissionName}`);
       // check if we already have an authTx from LS and if it's for the same user
       // could be a fake user with wrong signature, but then the backend will fail
+      console.log(`1`, this.authTx && this.authTx.serializedTransaction);
       if (this.authTx && this.authTx.serializedTransaction) {
         const txBuffer = new Uint8Array(
           Buffer.from(this.authTx.serializedTransaction, `hex`),
@@ -172,16 +174,20 @@ export default class WalletStore {
         }
       }
 
+      console.log(`2`, this.authTx);
       if (!this.authTx || !this.authTx.serializedTransaction) {
         this.rootStore.modalStore.toasts.info({
           title: "Authentication required",
           message: `Please sign the login transaction to authenticate.`,
           timeout: 10000,
         });
+        console.log(`3`, `authenticating`);
+        await delay(2000)
         await this.authenticate();
       }
 
       if (this.authTx) {
+        console.log(`4`, `fetching user`);
         await this.rootStore.userStore.fetchUser();
       }
     } catch (error) {
@@ -297,12 +303,13 @@ export default class WalletStore {
         },
       };
 
-      const txResult = (
-        await walletStore.accountInfo!.signTransaction(
-          { actions: [authAction] },
-          options,
-        )
-      ).transaction;
+      console.log(`5`, `signTransaction`);
+      const result = await Promise.race([walletStore.accountInfo!.signTransaction(
+        { actions: [authAction] },
+        options,
+      ), delay(10 * 1e3, true)]);
+      console.log(`6`, `signTransaction done`);
+      const txResult = result!.transaction;
       const tx = {
         serializedTransaction: arrayToHex(txResult.serializedTransaction),
         signatures: txResult.signatures,

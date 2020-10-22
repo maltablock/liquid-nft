@@ -11,7 +11,7 @@ const ExistingUploads: React.FC<{}> = ({}) => {
 
   if (!userStore.userData) return null;
 
-  const sortedFiles = userStore.userData.files.sort(
+  const sortedFiles = userStore.userData.files.slice().sort(
     (f1, f2) =>
       new Date(f2.uploadedAt).getTime() - new Date(f1.uploadedAt).getTime(),
   );

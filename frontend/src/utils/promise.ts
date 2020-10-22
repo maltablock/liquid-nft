@@ -4,21 +4,26 @@ export const PromiseAllSettled = async <T>(promises: Promise<T>[]) => {
     promises.map(p =>
       p.then(
         v => {
-          return { status: 'fulfilled', value: v as T };
+          return { status: "fulfilled", value: v as T };
         },
         error => {
-          return { status: 'rejected', reason: error };
+          return { status: "rejected", reason: error };
         },
       ),
     ),
   );
 };
 
-export const PromiseAllSettledFilterFulfilled = async <T>(promises: Promise<T>[]) => {
+export const PromiseAllSettledFilterFulfilled = async <T>(
+  promises: Promise<T>[],
+) => {
   const results = await PromiseAllSettled(promises);
   return results
     .filter(r => r.status === `fulfilled`)
-    .map(r => (r as { status: 'fulfilled'; value: T }).value);
+    .map(r => (r as { status: "fulfilled"; value: T }).value);
 };
 
-export const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+export const delay = (ms: number, shouldThrow = false): Promise<undefined> =>
+  new Promise((res, rej) =>
+    setTimeout(shouldThrow ? () => rej(new Error(`timeout`)) : res, ms),
+  );
