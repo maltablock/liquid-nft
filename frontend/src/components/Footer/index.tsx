@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   const copyRighttNotice = `© ${new Date().getFullYear()} Malta Block. All rights reserved.`;
 
   return (
-    <Flex flexDirection="column" alignItems="center" marginTop="auto" marginX="auto" marginBottom="major-4">
+    <Flex flexDirection="column" alignItems="center" marginTop="auto" marginX="auto" marginBottom="major-4" use="footer">
       <Image
         src={maltablockLogo}
         alt="logo"

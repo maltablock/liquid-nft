@@ -20,7 +20,7 @@ const theme = {
           background-repeat: no-repeat;
           background-color: #000000;
 
-          background: url(${bgSrc}) no-repeat center center fixed; 
+          background: url(${bgSrc}) no-repeat center center fixed;
           background-size: cover;
 
           -webkit-font-smoothing: antialiased;
@@ -62,7 +62,7 @@ const theme = {
       `https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700&display=swap`,
     ],
     default: "Roboto",
-    heading: "Montserrat",
+    heading: "Roboto",
   },
   palette: {
     primary: "#ff4f3e",
@@ -101,7 +101,7 @@ const theme = {
   },
   Button: {
     variants: {
-      'primary': {
+      primary: {
         styles: {
           base: {
             color: `white`,
@@ -111,11 +111,28 @@ const theme = {
             fontSize: `200`,
             lineHeight: `20px`,
             minHeight: `unset`,
-          }
-        }
-      }
+          },
+        },
+      },
     },
-  }
+  },
+  Link: {
+    Block: {
+      styles: {
+        base: {
+          color: `secondary`,
+          fontWeight: `500`,
+          textDecoration: `underline`
+        },
+      },
+    },
+    styles: {
+      base: {
+        color: `secondary`,
+        fontWeight: `500`,
+      },
+    },
+  },
 };
 
 export default theme;

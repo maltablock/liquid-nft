@@ -39,15 +39,7 @@ const App: React.FC<{}> = props => {
       <Box use="header" width="100%" zIndex={1}>
         <Toolbar />
       </Box>
-      <Container
-        use="main"
-        breakpoint="desktop"
-        alignX="center"
-        marginTop="major-12"
-        marginBottom="major-4"
-      >
-        <UserOverview />
-      </Container>
+      <UserOverview />
       <Footer />
 
       <ToastManager />

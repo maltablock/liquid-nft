@@ -26,16 +26,29 @@ const Toolbar: React.FC<UALProps> = props => {
       justifyContent="space-between"
       alignItems="center"
       marginTop="major-7"
-      marginX="major-7"
+      paddingX={{
+        default: "major-7",
+        "max-tablet": "major-1",
+      }}
     >
-      <Image src={logoSrc} height="36px" />
-      <Button
-        variant="primary"
-        type="button"
-        onClick={onClick}
-      >
-        {isLoggedIn ? walletStore.accountName : `Sign In`}
-      </Button>
+      <Image src={logoSrc} height={{ default: `36px`, 'max-tablet': `18px`} as any} />
+      {isLoggedIn ? (
+        <Button
+          size="small"
+          variant="link"
+          type="button"
+          palette="secondary"
+          fontSize="200"
+          fontWeight="700"
+          onClick={onClick}
+        >
+          {walletStore.accountName}
+        </Button>
+      ) : (
+        <Button variant="primary" type="button" onClick={onClick}>
+          Log In
+        </Button>
+      )}
     </Flex>
   );
 };
