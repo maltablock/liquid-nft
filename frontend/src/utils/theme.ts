@@ -95,6 +95,7 @@ const theme = {
       },
       defaultProps: {
         hasArrow: true,
+        timeout: 10000,
       },
     },
   },

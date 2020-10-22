@@ -135,6 +135,7 @@ export default class WalletStore {
       this.rootStore.modalStore.toasts.danger({
         title: "Login failure",
         message: `Unsupported wallet`,
+        timeout: 10000,
       });
     }
     return permissionName;
@@ -182,7 +183,7 @@ export default class WalletStore {
           timeout: 10000,
         });
         console.log(`3`, `authenticating`);
-        await delay(2000)
+        await delay(2000);
         await this.authenticate();
       }
 
@@ -304,10 +305,13 @@ export default class WalletStore {
       };
 
       console.log(`5`, `signTransaction`);
-      const result = await Promise.race([walletStore.accountInfo!.signTransaction(
-        { actions: [authAction] },
-        options,
-      ), delay(10 * 1e3, true)]);
+      const result = await Promise.race([
+        walletStore.accountInfo!.signTransaction(
+          { actions: [authAction] },
+          options,
+        ),
+        delay(30 * 1e3, true),
+      ]);
       console.log(`6`, `signTransaction done`);
       const txResult = result!.transaction;
       const tx = {
@@ -318,10 +322,15 @@ export default class WalletStore {
       this.setAuthTx(tx);
       return true;
     } catch (error) {
-      console.error("api.transact::error", JSON.stringify(error));
+      console.error(
+        "api.transact::error",
+        error.message,
+        JSON.stringify(error),
+      );
       this.rootStore.modalStore.toasts.danger({
         title: "Authentication failure",
         message: `Could not sign the login transaction: ${error.message}`,
+        timeout: 10000,
       });
 
       this.setAuthTx(undefined);
