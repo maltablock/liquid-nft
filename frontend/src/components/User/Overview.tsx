@@ -20,8 +20,6 @@ import ExistingUploads from "./ExistingUploads";
 import theme from "../../utils/theme";
 
 const Svg = styled(props => {
-  console.log(props, palette(`primary`)(theme as any));
-
   return (
     <svg width="100%" viewBox="0 0 80 80" {...props}>
       <circle id="red" fill={theme.palette.primary} cx="19" cy="19" r="19" />
@@ -53,6 +51,9 @@ const UserOverview: React.FC<{}> = props => {
   ]);
 
   const onClick = async () => {
+    try {
+      await walletStore.logout();
+    } catch {}
     await walletStore.login();
   };
 
@@ -81,7 +82,7 @@ const UserOverview: React.FC<{}> = props => {
             textTransform="uppercase"
             marginBottom="major-5"
           >
-            LiquidNFT is an IPFS pinning service for WAX
+            Liquid NFT is an IPFS pinning service for WAX
           </Heading>
           <Heading
             use="h2"

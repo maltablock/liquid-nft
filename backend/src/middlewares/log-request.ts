@@ -22,7 +22,7 @@ export const logRequest = (
     logger.info(
       {
         time: new Date().toUTCString(),
-        // fromIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        fromIP: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
         method: req.method,
         originalUri: req.originalUrl,
         uri: req.url,
