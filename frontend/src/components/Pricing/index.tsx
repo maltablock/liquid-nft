@@ -52,6 +52,7 @@ const PricingOverview: React.FC<{}> = props => {
           paddingX="major-6"
           maxWidth="400px"
           backgroundColor="background2"
+          marginBottom={{ default: `0`, 'max-mobile': `major-3`}}
         >
           <Heading
             use="h3"

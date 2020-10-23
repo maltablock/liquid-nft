@@ -3,6 +3,7 @@ import {
   faSearch,
   faTimes,
   faInfoCircle,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import bgSrc from "../assets/bg.jpg";
 
@@ -76,7 +77,7 @@ const theme = {
   Icon: {
     iconSets: [
       {
-        icons: [faSearch, faTimes, faInfoCircle],
+        icons: [faSearch, faTimes, faInfoCircle, faBars],
         prefix: "solid-",
         type: "font-awesome",
       },
@@ -142,6 +143,18 @@ const theme = {
             borderRadius: `20px`,
             padding: `10px 40px`,
             fontSize: `200`,
+            lineHeight: `20px`,
+            minHeight: `unset`,
+          },
+        },
+      },
+      nav: {
+        styles: {
+          base: {
+            color: `white`,
+            letterSpacing: `-0.2px`,
+            fontSize: `200`,
+            fontWeight: `700`,
             lineHeight: `20px`,
             minHeight: `unset`,
           },
