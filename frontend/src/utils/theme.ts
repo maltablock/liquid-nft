@@ -70,6 +70,7 @@ const theme = {
     tertiary: "#a4ff00",
     transparent: "#00000000",
     background: "#003547",
+    background2: "#003547",
     gray500: `#A1A8B3`,
   },
   Icon: {
@@ -122,7 +123,7 @@ const theme = {
         base: {
           color: `secondary`,
           fontWeight: `500`,
-          textDecoration: `underline`
+          textDecoration: `underline`,
         },
       },
     },
@@ -130,6 +131,21 @@ const theme = {
       base: {
         color: `secondary`,
         fontWeight: `500`,
+      },
+    },
+    variants: {
+      primary: {
+        styles: {
+          base: {
+            color: `white`,
+            backgroundColor: `primary`,
+            borderRadius: `20px`,
+            padding: `10px 40px`,
+            fontSize: `200`,
+            lineHeight: `20px`,
+            minHeight: `unset`,
+          },
+        },
       },
     },
   },

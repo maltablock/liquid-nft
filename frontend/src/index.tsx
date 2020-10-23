@@ -2,6 +2,7 @@ import { Provider as BumbagProvider } from "bumbag";
 import { observer, Provider } from "mobx-react";
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import { UALProvider as _UALProvider } from "ual-reactjs-renderer";
 import App from "./App";
 import { waxMainnet } from "./eos/networks";
@@ -9,13 +10,12 @@ import RootStore from "./store";
 import { useStore } from "./store/hook";
 import theme from "./utils/theme";
 
-
 console.dir(`App version ${process.env.REACT_APP_VERSION}`);
 
 const UALProvider = _UALProvider as any;
 
-const UALWrapper: React.FC<{}> = observer((props) => {
-  const walletStore = useStore((store) => store.walletStore);
+const UALWrapper: React.FC<{}> = observer(props => {
+  const walletStore = useStore(store => store.walletStore);
   const chainName = walletStore.chainName;
   const chains = [waxMainnet];
 
@@ -33,13 +33,15 @@ const UALWrapper: React.FC<{}> = observer((props) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={RootStore}>
-      <BumbagProvider theme={theme as any} colorMode="dark">
-        <UALWrapper>
-          <App />
-        </UALWrapper>
-      </BumbagProvider>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={RootStore}>
+        <BumbagProvider theme={theme as any} colorMode="dark">
+          <UALWrapper>
+            <App />
+          </UALWrapper>
+        </BumbagProvider>
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
