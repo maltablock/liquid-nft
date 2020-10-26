@@ -1,23 +1,20 @@
 import {
-  Alert,
-  applyTheme,
   Box,
   Button,
   Container,
   Flex,
   Heading,
   Link,
-  Text,
   styled,
-  palette,
+  Text,
 } from "bumbag";
 import { observer } from "mobx-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { useStore } from "../../store/hook";
+import theme from "../../utils/theme";
+import ExistingUploads from "./ExistingUploads";
 import FileUpload from "./FileUpload";
 import PendingUploads from "./PendingUploads";
-import ExistingUploads from "./ExistingUploads";
-import theme from "../../utils/theme";
 
 const Svg = styled(props => {
   return (

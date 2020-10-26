@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1036 1051">
+  <defs/>
+  <g fill="none" fill-rule="evenodd" opacity=".3" transform="rotate(50 260 558)">
+    <rect width="614" height="614" x="188" y="65" fill="#00EF79" rx="307"/>
+    <g transform="rotate(80 177.2 211.8)">
+      <rect width="360" height="360" fill="#FF4F3E" rx="180"/>
+      <path fill="#A4FF00" d="M180 0a180 180 0 01172.8 230.6A307.3 307.3 0 0198.5 19.5 179.2 179.2 0 01180 0z"/>
+    </g>
+  </g>
+</svg>
