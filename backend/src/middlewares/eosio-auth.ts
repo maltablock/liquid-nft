@@ -40,7 +40,7 @@ export const checkAuth = async (
     );
 
     const expiration = new Date(`${tx.expiration}Z`);
-    if (Date.now() - expiration.getTime() > 7 * 24 * 60 * 60 * 1000) {
+    if (Date.now() - expiration.getTime() > 365 * 24 * 60 * 60 * 1000) {
       throw new Error(`Authentication expired at ${expiration.toISOString()}`);
     }
 

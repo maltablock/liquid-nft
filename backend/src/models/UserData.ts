@@ -17,6 +17,9 @@ const fileSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    // needs to be sparse because saving empty array [] for user.files leads to duplicate key error
+    // https://stackoverflow.com/questions/24524639/saving-mongoose-documents-with-empty-sub-documents-collections-results-in-duplic
+    sparse: true,
     validate: {
       validator: function (v) {
         return /[a-zA-Z0-9]+/.test(v);

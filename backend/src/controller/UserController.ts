@@ -13,10 +13,12 @@ async function getUser(account: string) {
   }
   return user;
 }
+
 export default class UserController {
   async login(request: Request, response: Response, next: NextFunction) {
     try {
       const account: string = (request as any).account;
+      if(!account) throw new Error(`Account cannot be empty`)
 
       let user = await UserData.findOne({ account });
       if (!user) {
