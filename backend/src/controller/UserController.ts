@@ -51,8 +51,8 @@ export default class UserController {
       size: number;
     };
 
-    if (myFile.size > 1024 * 1024) {
-      throw new Error(`File sizes > 1 MB currently not supported`);
+    if (myFile.size > 10 * 1024 * 1024) {
+      throw new Error(`File sizes > 10 MB currently not supported`);
     }
 
     if (user.bytesPinned + myFile.size > MAX_UPLOAD_BYTES_PER_USER) {
@@ -68,6 +68,7 @@ export default class UserController {
     try {
       ipfsHash = await client.upload(myFile.data);
     } catch (error) {
+      logger.error(`DSP upload failed`, error.message)
       if (/invalid json response/i.test(error.message)) {
         throw new Error(`Internal Error`);
       }
