@@ -18,15 +18,18 @@ async function start() {
   const app = express();
   app.enable("trust proxy");
   app.use(cors());
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json({
+    limits: `20mb`,
+  }));
+  app.use(bodyParser.urlencoded({ extended: true, limits: `20mb` }));
   app.use(fileUpload({
     limits: {
       // doesn't work correctly?
       fileSize: 100 * 1024 * 1024,
-      fields: 50,
-      files: 1,
-      parts: 51,
+      // fields: 50,
+      // files: 1,
+      // parts: 51,
+      abortOnLimit: true,
     }
   }));
   app.use(logRequest);

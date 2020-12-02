@@ -20,3 +20,14 @@ dokku mongo:link hoster hoster
 git remote add dokku dokku@dokku-host:hoster
 ```
 
+> ⚠️ Need to change dokku's nginx config to allow uploads > 1mb.
+
+
+```bash
+mkdir /home/dokku/node-js-app/nginx.conf.d/
+echo 'client_max_body_size 20m;' > /home/dokku/node-js-app/nginx.conf.d/upload.conf
+chown dokku:dokku /home/dokku/node-js-app/nginx.conf.d/upload.conf
+service nginx reload
+```
+
+[Source](http://dokku.viewdocs.io/dokku/configuration/nginx/#customizing-via-configuration-files-included-by-the-default-tem)
