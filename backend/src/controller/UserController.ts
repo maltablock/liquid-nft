@@ -38,7 +38,6 @@ export default class UserController {
   }
 
   async uploadFile(request: Request, response: Response, next: NextFunction) {
-    logger.info(`in uploadfile`)
     const account: string = (request as any).account;
     let user = await getUser(account);
 
