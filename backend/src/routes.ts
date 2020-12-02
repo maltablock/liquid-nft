@@ -25,7 +25,7 @@ export const Routes = [
   {
     requiresAuth: true,
     method: "post",
-    // may not start with user for some reason, bodyparser <> fileupload issue?
+    // may not start with /user for some reason, bodyparser <> fileupload issue?
     route: "/upload",
     controller: UserController,
     action: "uploadFile",

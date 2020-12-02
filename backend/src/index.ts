@@ -23,11 +23,10 @@ async function start() {
   app.use(fileUpload({
     limits: {
       // doesn't work correctly?
-      // fileSize: 1 * 1024 * 1024, // 1 MB until liquidstorage is fixed
-      // fileSize: 100 * 1024 * 1024,
-      // fields: 50,
-      // files: 1,
-      // parts: 51,
+      fileSize: 100 * 1024 * 1024,
+      fields: 50,
+      files: 1,
+      parts: 51,
     }
   }));
   app.use(logRequest);
