@@ -71,6 +71,8 @@ export default class UserController {
       logger.error(`DSP upload failed`, error.message)
       if (/invalid json response/i.test(error.message)) {
         throw new Error(`Internal Error`);
+      } else {
+        throw error;
       }
     }
 
