@@ -58,7 +58,7 @@ const WaxTestNetwork = createNetwork(
   `f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12`
 );
 const MainNetwork = createNetwork(
-  process.env.EOS_ENDPOINT || `https://dsp.maltablock.org:443`,
+  process.env.EOS_ENDPOINT || `https://dsp.airdropsdac.com:443`,
   `aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906`
 );
 const WaxNetwork = createNetwork(
